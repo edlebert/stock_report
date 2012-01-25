@@ -1,0 +1,1 @@
+A simple command-line tool to fetch current stock data from yahoo, ten-year historical data from MSN, and use the Payback Time method to predict future prices based on EPS growth and a predicted PE ratio.

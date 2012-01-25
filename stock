@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+require 'optparse'
+require './stock.rb'
+require './stock_report.rb'
+
+stock_options = {}
+
+option_parser = OptionParser.new
+option_parser.banner = "Usage: command_line.rb [options] ticker" 
+option_parser.on( '-g', '--growth-rate RATE', 'Override the predicted growth rate.  1.2 means 20% growth.' ) do |value|
+  stock_options[:predicted_growth_rate] = value.to_f
+end
+option_parser.on( '-p', '--pe-ratio RATIO', 'Override the predicted PE ratio.' ) do |value|
+  stock_options[:predicted_pe_ratio] = value.to_f
+end
+option_parser.on( '-h', '--help', 'Display this screen' ) do
+  $stderr.puts option_parser
+  exit
+end
+option_parser.parse!
+ 
+unless symbol = ARGV.shift
+  $stderr.puts option_parser.banner
+  exit
+end
+
+puts StockReport.new(Stock.new(symbol, stock_options))
